@@ -36,7 +36,7 @@ export const Options: NextAuthOptions = {
         }
     },
     pages: {
-        signIn: '/auth/signin',
-        newUser: '/auth/newuser',
+        signIn: '/api/auth/signIn',
+        newUser: '/api/auth/newUser',
     }
 }
