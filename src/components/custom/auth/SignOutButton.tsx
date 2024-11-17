@@ -9,7 +9,7 @@ export default function SignOutButton() {
             <Button onClick={() => {
                 signOut()
             }}>
-                Sign In
+                Sign Out
             </Button>
         </div>
     )

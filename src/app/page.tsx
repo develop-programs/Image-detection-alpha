@@ -6,6 +6,7 @@ import React from 'react'
 
 export default async function page() {
   const session = await getServerSession(Options)
+  console.log(session);
   return (
     <div className='h-screen grid place-content-center'>
       {
