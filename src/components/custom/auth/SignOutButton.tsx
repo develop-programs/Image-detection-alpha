@@ -5,12 +5,10 @@ import React from 'react'
 
 export default function SignOutButton() {
     return (
-        <div>
-            <Button onClick={() => {
-                signOut()
-            }}>
-                Sign Out
-            </Button>
-        </div>
+        <Button variant="ghost" onClick={() => {
+            signOut()
+        }}>
+            Sign Out
+        </Button>
     )
 }
