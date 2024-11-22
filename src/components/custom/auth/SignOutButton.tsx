@@ -3,12 +3,17 @@ import { Button } from '@/components/ui/button'
 import { signOut } from 'next-auth/react'
 import React from 'react'
 
-export default function SignOutButton() {
+export default function SignOutButton(
+    { children, className }: {
+        children?: React.ReactNode,
+        className?: string
+    }
+) {
     return (
         <Button variant="ghost" onClick={() => {
             signOut()
-        }}>
-            Sign Out
+        }} className={className}>
+            {children}
         </Button>
     )
 }

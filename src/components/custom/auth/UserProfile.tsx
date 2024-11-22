@@ -1,6 +1,5 @@
 import { Options } from '@/providers/auth_provider'
 import { getServerSession } from 'next-auth'
-import Image from 'next/image'
 import React from 'react'
 import SignInButton from './SignInButton'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -36,7 +35,7 @@ export default async function UserProfile() {
                             <div className='w-full grid gap-2'>
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <Button variant="ghost">
+                                        <Button variant="ghost" className='justify-start focus-visible:ring-0'>
                                             Manage Account
                                         </Button>
                                     </DialogTrigger>
@@ -48,7 +47,9 @@ export default async function UserProfile() {
                                         </DialogHeader>
                                     </DialogContent>
                                 </Dialog>
-                                <SignOutButton />
+                                <SignOutButton className='justify-start focus-visible:ring-0'>
+                                    Sign Out
+                                </SignOutButton>
                             </div>
                         </PopoverContent>
                     </Popover>

@@ -8,8 +8,8 @@ export default function SignInButton() {
         <div>
             <Button onClick={() => {
                 signIn()
-            }}>
-                Sign In
+            }} variant="ghost">
+                Log In
             </Button>
         </div>
     )
