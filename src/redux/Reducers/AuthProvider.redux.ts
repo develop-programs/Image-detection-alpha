@@ -9,8 +9,8 @@ interface UserData {
     email: string;
     image: string;
     isEmailVerified: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
 
 // Define the initial state using that type
@@ -20,8 +20,8 @@ const initialState: UserData = {
     email: "",
     isEmailVerified: false,
     image: "",
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: "",
+    updatedAt: ""
 }
 
 export const AuthSlice = createSlice({
@@ -44,8 +44,8 @@ export const AuthSlice = createSlice({
             state.email = ""
             state.isEmailVerified = false
             state.image = ""
-            state.createdAt = new Date()
-            state.updatedAt = new Date()
+            state.createdAt = ""
+            state.updatedAt = ""
         },
     },
 })
