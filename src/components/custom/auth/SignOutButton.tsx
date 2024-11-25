@@ -1,6 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { removeData } from '@/redux/Reducers/AuthProvider.redux'
+import { resetData } from '@/redux/Reducers/AuthProvider.redux'
 import { AppDispatch } from '@/redux/store'
 import { signOut } from 'next-auth/react'
 import React from 'react'
@@ -16,7 +16,7 @@ export default function SignOutButton(
     return (
         <Button variant="ghost" onClick={() => {
             signOut()
-            dispatch(removeData())
+            dispatch(resetData())
         }} className={className}>
             {children}
         </Button>

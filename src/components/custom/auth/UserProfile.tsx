@@ -17,14 +17,14 @@ export default async function UserProfile() {
                     <Popover>
                         <PopoverTrigger asChild>
                             <Avatar className='size-7'>
-                                <AvatarImage src={session.user.image} alt={session.user.name} />
+                                <AvatarImage src={session.user.image as string} alt={session.user.name} />
                                 <AvatarFallback>{session.user.name}</AvatarFallback>
                             </Avatar>
                         </PopoverTrigger>
                         <PopoverContent className='space-y-2'>
                             <div className='flex items-center gap-4'>
                                 <Avatar className='size-7'>
-                                    <AvatarImage src={session.user.image} alt={session.user.name} />
+                                    <AvatarImage src={session.user.image as string} alt={session.user.name} />
                                     <AvatarFallback>{session.user.name}</AvatarFallback>
                                 </Avatar>
                                 <div className='text-xs grid'>

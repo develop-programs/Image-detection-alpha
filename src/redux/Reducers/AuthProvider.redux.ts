@@ -1,6 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from "@/redux/store"
+import axios from 'axios'
+
+export const fetchUser = createAsyncThunk('user/fetchUser', async (email: string) => {
+    const response = await axios.get(`${window.location.origin}/api/auth?email=${email}`)
+    return response.data
+})
+
 
 // Define a type for the slice state
 interface UserData {
@@ -13,15 +19,34 @@ interface UserData {
     updatedAt: string;
 }
 
+interface Subscription {
+    id: string;
+    plan: string;
+    credit: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
 // Define the initial state using that type
-const initialState: UserData = {
-    id: "",
-    name: "",
-    email: "",
-    isEmailVerified: false,
-    image: "",
-    createdAt: "",
-    updatedAt: ""
+const initialState = {
+    loading: false,
+    data: {
+        id: '',
+        name: '',
+        email: '',
+        image: '',
+        isEmailVerified: false,
+        createdAt: '',
+        updatedAt: ''
+    } as UserData,
+    subscription: {
+        id: '',
+        plan: '',
+        credit: 0,
+        createdAt: '',
+        updatedAt: ''
+    } as Subscription,
+    error: ""
 }
 
 export const AuthSlice = createSlice({
@@ -29,28 +54,41 @@ export const AuthSlice = createSlice({
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
-        insertData: (state, action: PayloadAction<UserData>) => {
-            state.id = action.payload.id
-            state.name = action.payload.name
-            state.email = action.payload.email
-            state.isEmailVerified = action.payload.isEmailVerified
-            state.image = action.payload.image
-            state.createdAt = action.payload.createdAt
-            state.updatedAt = action.payload.updatedAt
-        },
-        removeData: (state) => {
-            state.id = ""
-            state.name = ""
-            state.email = ""
-            state.isEmailVerified = false
-            state.image = ""
-            state.createdAt = ""
-            state.updatedAt = ""
-        },
+        resetData: (state) => {
+            state.data = {
+                id: '',
+                name: '',
+                email: '',
+                image: '',
+                isEmailVerified: false,
+                createdAt: '',
+                updatedAt: ''
+            }
+            state.subscription = {
+                id: '',
+                plan: '',
+                credit: 0,
+                createdAt: '',
+                updatedAt: ''
+            }
+        }
+
     },
+    extraReducers: (builder) => {
+        builder.addCase(fetchUser.pending, (state) => {
+            state.loading = true
+        }).addCase(fetchUser.fulfilled, (state, action) => {
+            state.loading = false
+            state.data = action.payload.data
+            state.subscription = action.payload.subscription
+        }).addCase(fetchUser.rejected, (state, action) => {
+            state.loading = false
+            state.error = action.error.message || "An unknown error occurred"
+        })
+    }
 })
 
-export const { insertData, removeData } = AuthSlice.actions
+export const { resetData } = AuthSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const Auth = (state: RootState) => state.Auth
