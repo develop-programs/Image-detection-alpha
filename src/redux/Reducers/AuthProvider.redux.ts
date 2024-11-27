@@ -7,26 +7,6 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (email: string
     return response.data
 })
 
-
-// Define a type for the slice state
-interface UserData {
-    id: string;
-    name: string;
-    email: string;
-    image: string;
-    isEmailVerified: boolean;
-    createdAt: string;
-    updatedAt: string;
-}
-
-interface Subscription {
-    id: string;
-    plan: string;
-    credit: number;
-    createdAt: string;
-    updatedAt: string;
-}
-
 // Define the initial state using that type
 const initialState = {
     loading: false,
@@ -37,15 +17,15 @@ const initialState = {
         image: '',
         isEmailVerified: false,
         createdAt: '',
-        updatedAt: ''
+        updatedAt: '',
+        subscriptions: {
+            id: '',
+            plan: '',
+            credit: 0,
+            createdAt: '',
+            updatedAt: ''
+        }
     } as UserData,
-    subscription: {
-        id: '',
-        plan: '',
-        credit: 0,
-        createdAt: '',
-        updatedAt: ''
-    } as Subscription,
     error: ""
 }
 
@@ -62,14 +42,14 @@ export const AuthSlice = createSlice({
                 image: '',
                 isEmailVerified: false,
                 createdAt: '',
-                updatedAt: ''
-            }
-            state.subscription = {
-                id: '',
-                plan: '',
-                credit: 0,
-                createdAt: '',
-                updatedAt: ''
+                updatedAt: '',
+                subscriptions: {
+                    id: '',
+                    plan: '',
+                    credit: 0,
+                    createdAt: '',
+                    updatedAt: ''
+                }
             }
         }
 
@@ -80,7 +60,6 @@ export const AuthSlice = createSlice({
         }).addCase(fetchUser.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload.data
-            state.subscription = action.payload.subscription
         }).addCase(fetchUser.rejected, (state, action) => {
             state.loading = false
             state.error = action.error.message || "An unknown error occurred"

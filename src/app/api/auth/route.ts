@@ -12,7 +12,7 @@ export async function GET(Request: NextRequest) {
         email: await Request.nextUrl.searchParams.get("email")?.toString(),
       },
       include: {
-        subscriptions: true,
+        subscription: true,
       },
     });
 

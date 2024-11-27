@@ -14,10 +14,10 @@ export default async function UserProfile() {
         <div>
             {
                 session ? (
-                    <Popover>
+                    <Popover aria-label='profile'>
                         <PopoverTrigger asChild>
                             <Avatar className='size-7'>
-                                <AvatarImage src={session.user.image as string} alt={session.user.name} />
+                                <AvatarImage src={session.user.image as string} alt={session.user.name} loading='lazy' decoding='async' />
                                 <AvatarFallback>{session.user.name}</AvatarFallback>
                             </Avatar>
                         </PopoverTrigger>
@@ -39,7 +39,7 @@ export default async function UserProfile() {
                                             Manage Account
                                         </Button>
                                     </DialogTrigger>
-                                    <DialogContent>
+                                    <DialogContent className='max-w-3xl h-[40rem]'>
                                         <DialogHeader>
                                             <DialogTitle>
                                                 Account
