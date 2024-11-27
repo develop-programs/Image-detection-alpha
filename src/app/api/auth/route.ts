@@ -5,30 +5,57 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export async function GET(Request: NextRequest) {
-  try {
+  const subscription = Request.nextUrl.searchParams.get("subscription")?.toString();
+  if (subscription === true.toString()) {
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          email: await Request.nextUrl.searchParams.get("email")?.toString(),
+        },
+      });
+      const subscription = await prisma.subscription.findFirst({
+        where: {
+          userId: user?.id,
+        },
+      });
 
-    const user = await prisma.user.findFirst({
-      where: {
-        email: await Request.nextUrl.searchParams.get("email")?.toString(),
-      },
-      include: {
-        subscription: true,
-      },
-    });
-
-    if (!user) {
+      if (!user) {
+        return await NextResponse.json(
+          { message: "User not found" },
+          { status: 404 }
+        );
+      }
       return await NextResponse.json(
-        { message: "User not found" },
-        { status: 404 }
+        { message: "user found", data: user, subscription: subscription },
+        { status: 200 }
       );
+    } catch (error) {
+      return await NextResponse.json({ error }, { status: 500 });
     }
-    return await NextResponse.json(
-      { message: "user found", data: user },
-      { status: 200 }
-    );
-  } catch (error) {
-    return await NextResponse.json({ error }, { status: 500 });
   }
+  else {
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          email: await Request.nextUrl.searchParams.get("email")?.toString(),
+        },
+      });
+
+      if (!user) {
+        return await NextResponse.json(
+          { message: "User not found" },
+          { status: 404 }
+        );
+      }
+      return await NextResponse.json(
+        { message: "user found", data: user },
+        { status: 200 }
+      );
+    } catch (error) {
+      return await NextResponse.json({ error }, { status: 500 });
+    }
+  }
+
 }
 
 export async function POST(Request: NextRequest) {
@@ -86,7 +113,7 @@ export async function PATCH(Request: NextRequest) {
 
     const updatedUser = await prisma.user.update({
       where: { email: email },
-      data: { isEmailVerified: body.isEmailVerified },
+      data: { ...body },
     });
 
     return await NextResponse.json(

@@ -1,11 +1,14 @@
+"use client";
 import React from 'react';
-
+import { useSelector } from 'react-redux';
 
 export default function Credit() {
+    const data = useSelector((state: any) => state.Auth);
+
     return (
         <div className='flex gap-2 items-center'>
             <span className='font-semibold'>
-                400 / 400
+                {data.subscription.credit} / 400
             </span>
             <svg width="42" height="42" viewBox="0 0 42 42" className='size-5' fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_7917_12)">

@@ -14,14 +14,14 @@ datasource db {
 }
 
 model User {
-  id              String       @id @default(auto()) @map("_id") @db.ObjectId
-  email           String       @unique @db.String
-  name            String?      @db.String
-  password        String       @db.String
-  image           String?      @db.String
-  isEmailVerified Boolean      @default(false) @db.Bool
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  email           String        @unique @db.String
+  name            String?       @db.String
+  password        String        @db.String
+  image           String?       @db.String
+  isEmailVerified Boolean       @default(false) @db.Bool
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   subscription    Subscription?
 }
 
